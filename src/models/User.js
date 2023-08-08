@@ -10,7 +10,7 @@ const userSchema = new Schema({ // 스키마 정의
   email: {
     type:String,
     required: true,
-    unique: true, // unique: 색인(primary key), 고유한 id값, 이메일은 중복불가
+    unique: true, // unique: 색인(primary key), 고유한 id값, email값은 중복불가
   },
   userId: {
     type:String,
@@ -37,14 +37,14 @@ const userSchema = new Schema({ // 스키마 정의
 const User = mongoose.model('User', userSchema) // User -> users 라고 컬렉션이름 저장
 module.exports = User
 
-// User 데이터 생성 테스트
-const user = new User({
-  name: '태양',
-  email: 'sun@gmail.com',
-  userId: 'sunrise',
-  password: '1234567890',
-  isAdmin: true, //관리자 권한 부여
-})
+// // User 데이터 생성 테스트
+// const user = new User({
+//   name: '태양',
+//   email: 'sun@gmail.com',
+//   userId: 'sunrise',
+//   password: '1234567890',
+//   isAdmin: true, //관리자 권한 부여
+// })
 
-user.save()
-  .then(() => console.log('user created!'))
+// user.save()
+//   .then(() => console.log('user created!'))

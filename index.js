@@ -5,7 +5,7 @@ const logger = require('morgan')
 const mongoose = require('mongoose')
 const axios = require('axios') //fetch와 비슷하지만 문법이 살짝 다름
 // const todo = require('./src/models/Todo')
-const user = require('./src/models/User')
+// const user = require('./src/models/User')
 
 const corsOptions = { //CORS 옵션
   origin: 'http://127.0.0.1:5500', //해당 URL 주소만 요청을 허락함 
@@ -22,7 +22,7 @@ app.use(express.json()) //request body 파싱
 app.use(logger('tiny')) //Logger 설정
 
 app.get('/hello', (req, res) => {
-  res.json('hello world!')
+  res.json('hello world!') //send대신 json을 쓰면 json형태(문자열)로 response됨 - 브라우저에서 조회 가능
 })
 app.post('/hello', (req, res) => {
   console.log(req.body)

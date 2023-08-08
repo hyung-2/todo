@@ -6,8 +6,8 @@ const { Types: { ObjectId } } = Schema // = mongoose.Schema.Types.ObjectId
 const todoSchema = new Schema({ //스키마 정의, 객체형태로 정의
   author: {
     type: ObjectId, //사용자의 ID
-    required: true, //데이터 저장할때 무조건 있어야함 없으면 몽고db에서 에러일어남 - 항상 필요한 필드
-    ref: 'User' //사용자 모델을 참조 (어떤사용자인지 사용자의 id값 추출)
+    required: true, //필수입력
+    ref: 'User' //사용자의 id값 저장
   },
   title: {
     type: String,
