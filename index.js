@@ -4,22 +4,28 @@ const cors = require('cors')
 const logger = require('morgan')
 const mongoose = require('mongoose')
 const axios = require('axios') //fetch와 비슷하지만 문법이 살짝 다름
-// const todo = require('./src/models/Todo')
+// const todo = require('./src/models/Todo') 생성테스트시 연동하기위해
 // const user = require('./src/models/User')
+const usersRouter = require('./src/routes/users')
+const todosRouter = require('./src/routes/todos')
+const config = require('./config')
 
 const corsOptions = { //CORS 옵션
   origin: 'http://127.0.0.1:5500', //해당 URL 주소만 요청을 허락함 
   credentials: true //사용자 인증이 필요한 리소스를 요청할수 있도록 허용함
 }
-const CONNECT_URL = 'mongodb://127.0.0.1:27017/hyung'
 
-mongoose.connect(CONNECT_URL) //몽고db서버와 연동
+mongoose.connect(config.MONGODB_URL) //몽고db서버와 연동
  .then(() => console.log('mongodb connected ...'))
  .catch(e => console.log(`failed to connect mongodb: ${e}`))
 
 app.use(cors(corsOptions)) //CORS 설정
 app.use(express.json()) //request body 파싱
 app.use(logger('tiny')) //Logger 설정
+
+//usersRouter, todosRouter 는 객체이므로 미들웨어등록
+app.use('/api/users', usersRouter) // /api/users 라는 url을 포함하여 usersRouter실행 
+app.use('/api/todos', todosRouter) // /api/todos 라는 url을 포함하여 todosRouter실행 
 
 app.get('/hello', (req, res) => {
   res.json('hello world!') //send대신 json을 쓰면 json형태(문자열)로 response됨 - 브라우저에서 조회 가능
