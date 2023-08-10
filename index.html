@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- chart.js -->
+  <div><canvas id="myChart"></canvas></div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGQ0NGM4NmZlYjk2YzYzOWJiYmM4NmEiLCJuYW1lIjoibGVlamFAZ21haWwuY29tIiwidXNlcklkIjoibGVlamEiLCJpc0FkbWluIjp0cnVlLCJjcmVhdGVkQXQiOiIyMDIzLTA4LTEwVDAyOjMzOjQyLjk1OFoiLCJpYXQiOjE2OTE2MzUwNDcsImV4cCI6MTY5MTcyMTQ0NywiaXNzIjoiaHl1bmcifQ.H-Iteh8_yWw9lV8iDDvCwpFWiMTEJi8kZ13CvKbf4Cs'
+
+    fetch('http://127.0.0.1:5000/api/todos/group/date/createdAt', {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+
+        const group = data.docs
+        const ctx = document.getElementById('myChart');
+
+        new Chart(ctx, {
+          type: 'bar', //bar, doughnut, line
+          data: {
+            labels: group.map(item => `${item._id.year}년 ${item._id.month}월`),
+            // group.filter(item => item._id).map(item => item._id), //id값 뽑아냄
+            datasets: [{
+              label: '# of Todos',
+              data: group.map(item => item.count), //카테고리의 갯수
+              borderWidth: 1,
+              // backgroundColor: 'pink'
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      })
+    
+  </script>
+</body>
+</html>
