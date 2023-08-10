@@ -9,6 +9,16 @@ const todoSchema = new Schema({ //스키마 정의, 객체형태로 정의
     required: true, //필수입력
     ref: 'User' //사용자의 id값 저장
   },
+  category:{
+    type: String,
+    required: true,
+    trim: true
+  },
+  imgUrl:{
+    type: String,
+    required: true,
+    trim: true
+  },
   title: {
     type: String,
     required: true,
@@ -26,11 +36,11 @@ const todoSchema = new Schema({ //스키마 정의, 객체형태로 정의
     type: Date,
     default: Date.now //현재시각 자동저장
   },
-  lastModifiedAt: {
+  lastModifiedAt: { //마지막으로 수정된 시각
     type: Date,
     default: Date.now
   },
-  finishedAt: {
+  finishedAt: { //할일 종료 날짜
     type: Date,
     default: Date.now
   }
