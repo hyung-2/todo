@@ -31,9 +31,10 @@ const isAuth = (req, res, next) => { //권한을 확인하는 라우트핸들러
         res.status(419).json({code: 419, message: 'Token expired!'}) //419:unknown
       }else if(err){ //토큰 복호화중 에러발생
         res.status(401).json({code: 401, message: 'Invalid Token!'})
+      }else{  
+        req.user = userInfo // 브라우저에서 전송한 사용자 정보(복호화한 jwt 토큰)를 req객체에 저장 - 미들웨어임
+        next() //미들웨어기때문에 다음 핸들러로 요청 넘김
       }
-      req.user = userInfo // 브라우저에서 전송한 사용자 정보(복호화한 jwt 토큰)를 req객체에 저장 - 미들웨어임
-      next() //미들웨어기때문에 다음 핸들러로 요청 넘김
     }) 
   }
 }
